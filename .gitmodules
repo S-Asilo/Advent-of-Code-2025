@@ -1,0 +1,3 @@
+[submodule "brick"]
+	path = brick
+	url = https://github.com/BrickOyster/aoc2025.git
