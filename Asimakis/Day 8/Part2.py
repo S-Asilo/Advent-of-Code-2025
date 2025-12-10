@@ -35,12 +35,14 @@ def Compress(C):
 
 
 Junction_boxes = []
+count = 0
 for line in f:
     line = line[:-1]
     X,Y,Z = line.split(",")
     X = int(X)
     Y = int(Y)
     Z = int(Z)
+    count += 1
 
     Junction_boxes.append([X,Y,Z])
 
@@ -58,39 +60,33 @@ sorted_Distance_combs = {k: v for k, v in sorted(Distance_combs.items(), key=lam
 Circuits = []
 Circuits.append({list(sorted_Distance_combs.keys())[0][0],list(sorted_Distance_combs.keys())[0][1]})
 
-count = 0
+# count = 0
 for index in sorted_Distance_combs:
     a, b = index
     Match = False
-    Circuits = Compress(Circuits)
     for circuit in Circuits:
         if a in circuit and b in circuit:
             Match = True
-            count += 1
+            # count += 1
             break
         elif a in circuit or b in circuit:
             circuit.add(a)
             circuit.add(b)
             Match = True
-            count += 1
+            # count += 1
             break
     
 
     if not Match:
         Circuits.append({a,b})
-        count += 1
+        # count += 1
 
+    Circuits = Compress(Circuits)
 
-    if count == 1000:
+    if len(Circuits[0]) == count:
+        # Xa * Xb
+        Password = Junction_boxes[a][0] * Junction_boxes[b][0]
         break    
 
-
-Circuits = Compress(Circuits)
-Circuits = sorted(Circuits, key=len, reverse=True)
-
-
-Password = 1
-for i in range(3):
-    Password *= len(Circuits[i])
 
 print(Password)
