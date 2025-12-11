@@ -1,5 +1,3 @@
-import numpy as np
-
 f = open("InputDay6.txt", 'r')
 
 problems = []
